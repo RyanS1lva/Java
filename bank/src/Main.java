@@ -1,40 +1,12 @@
 import java.util.Scanner;
 
-class Account{
-    double balance;
-
-    public Account(double initialBalance) {
-        this.balance = initialBalance;
-    }
-
-    void deposit(double amount) {
-        if(amount > 0){
-            this.balance += amount;
-            System.out.println("Depósito realizado com sucesso!");
-        }else{
-            System.out.println("Valor para depósito inválido!");
-        }
-    }
-
-    void withdraw(double amount) {
-        if(amount > 0 && amount <= this.balance){
-            this.balance -= amount;
-            System.out.println("Saque realizado com sucesso!");
-        }else{
-            System.out.println("Valor para saque inválido!");
-        }
-    }
-
-    void getBalance() {
-        System.out.println("Saldo total: R$ " + this.balance);
-    }
-}
-
 public class Main{
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
         double initialBalance = -1;
         double amount;
+        int typeAccount;
+        Account myAccount;
 
         System.out.println("=-=-Menu bancário-=-=");
         do {
@@ -50,7 +22,29 @@ public class Main{
             }
         } while (initialBalance < 0);
 
-        Account myAccount = new Account(initialBalance);
+        while(true){
+            System.out.println("0 - Conta simples");
+            System.out.println("1 - Conta corrente (Com limite adicional)");
+            System.out.print("Insira a opção desejada: ");
+            typeAccount = input.nextInt();
+            input.nextLine();
+
+            if (typeAccount == 0) {
+                System.out.println("Conta simples selecionada!");
+                myAccount = new Account(initialBalance);
+                break;
+            } else if (typeAccount == 1) {
+                System.out.println("Conta corrente selecionada!");
+                System.out.println("Limite adicional de: R$ 200!");
+                myAccount = new CheckingAccount(initialBalance);
+                break;
+            } else {
+                System.out.println("Digite uma opção válida para tipo de conta!");
+            }
+        }
+
+
+
 
         while(true){
             System.out.println("\n1 - Visualizar saldo atual");
